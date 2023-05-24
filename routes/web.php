@@ -40,15 +40,16 @@ Route::prefix('admin')->name('admin.')->group(function() {
 
 Route::get('/admin/post', [App\Http\Controllers\Admin\Auth\PostController::class, 'create'])->name('admin.post.create');
 Route::post('/admin/post', [App\Http\Controllers\Admin\Auth\PostController::class, 'store'])->name('admin.post.store');
-Route::post('/post/edit',[PostController::class,'edit']);
 Route::post('/post/delete',[PostController::class,'delete']);
 
 Route::get('/dashboard/read/{post}', [ReadController::class, 'read'])->name('read');
 Route::get('/dashboard/unread/{post}', [ReadController::class, 'unread'])->name('unread');
-Route::get('/admin/dashboard/read{post}', [ReadController::class, 'read'])->name('read');
-Route::get('/admin/dashboard/unread/{post}', [ReadController::class, 'unread'])->name('unread');
+Route::get('/admin/dashboard/read{post}', [App\Http\Controllers\Admin\Auth\ReadController::class, 'read'])->name('read');
+Route::get('/admin/dashboard/unread/{post}', [App\Http\Controllers\Admin\Auth\ReadController::class, 'unread'])->name('unread');
 
-Route::get('/admin/detail/{id}', [App\Http\Controllers\Admin\Auth\PostController::class, 'detail'])->name('admin.detail');
+Route::get('/admin/post/detail/{id}', [App\Http\Controllers\Admin\Auth\PostController::class, 'detail'])->name('admin.post.detail');
+Route::get('/admin/post/edit/{id}', [App\Http\Controllers\Admin\Auth\PostController::class, 'edit'])->name('admin.post.edit');
+Route::post('/admin/dashboard', [App\Http\Controllers\Admin\Auth\PostController::class, 'update'])->name('admin.post.update');
 
 Route::get('searchResultPost', [PostController::class, 'controllerSearchPost'])->name('searchResultPost');
 Route::get('/admin/searchResultPost', [App\Http\Controllers\Admin\Auth\PostController::class, 'controllerSearchPost'])->name('admin.searchResultPost');

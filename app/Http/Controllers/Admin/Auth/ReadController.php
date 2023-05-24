@@ -12,7 +12,7 @@ use App\Models\Post;
 class ReadController extends Controller
 {
     public function read(Post $post, Request $request){
-        if($post->isReadBy(Auth::user()->id)){
+        if($post->isReadBy(Auth::guard('admin')->user()->id)){
             if(!Auth::guard('admin')->user()){
                 $user=Auth::user()->id;
                 $read=Read::where('post_id', $post->id)->where('user_id', $user)->first();

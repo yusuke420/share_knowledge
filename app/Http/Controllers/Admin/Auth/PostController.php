@@ -75,6 +75,12 @@ class PostController extends Controller
         return view('admin.detail', compact('post','users'));
     }
 
+    public function edit(Request $request, int $id)
+    {
+        $post = Post::where('id', $id)->first();
+		return view('admin.auth.edit', compact('post'));
+    }
+
     use SoftDeletes;
 
     /**

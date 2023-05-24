@@ -26,23 +26,18 @@
                         @endswitch
                             <h5 class="p-4">{{ $post->title }}</h5>
                             <span>
-                                @if($post->isReadBy(Auth::guard('admin')->user()->id))
-                                <a href="{{ route('unread', $post) }}" class="btn btn-success btn-sm">
-                                    <button class="read-button absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">
-                                        <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check check active' : 'fa-regular fa-square check' }}" style="color: #000000;"></i>
+                                <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
+                                    <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">
+                                        <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
                                     </button>
                                 </a>
-                                @else
-                                    <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
-                                        <button class="read-button absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">
-                                        <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check check active' : 'fa-regular fa-square check' }}" style="color: #000000;"></i>
-                                    </button>
-                                    </a>
-                                @endif
                             </span>
                             <p class="absolute right-0 px-2" style="top: 3.5rem;">{{ \Carbon\Carbon::parse($post->created_at)->format('Y/m/d') }}</p>
                         </div>
                         <p class="p-4">{{ $post->body }}</p>
+                        <a href="{{ route('admin.post.edit', $post->id) }}" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0 absolute bottom-0 right-0 p-4">編集
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </div>
                 <!-- post - end -->
                 </div>
@@ -67,6 +62,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     登録日
                                 </th>
+                                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                    既読
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,6 +81,9 @@
                                 </td>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     {{ \Carbon\Carbon::parse($user->created_at)->format('Y/m/d') }}
+                                </td>
+                                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                    <i class="{{ $post->isReadBy($user->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
                                 </td>
                             </tr>
                         @endforeach

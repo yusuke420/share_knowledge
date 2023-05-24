@@ -22,7 +22,7 @@ class PostController extends Controller
     {
         $posts=Post::latest()->paginate(20);
         $posts->load('user');
-        return view('admin.dashboard', compact('posts'));    
+        return view('dashboard', compact('posts'));    
     }
 
     public function readPost(Request $request, $id)
