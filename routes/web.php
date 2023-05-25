@@ -42,10 +42,12 @@ Route::get('/admin/post', [App\Http\Controllers\Admin\Auth\PostController::class
 Route::post('/admin/post', [App\Http\Controllers\Admin\Auth\PostController::class, 'store'])->name('admin.post.store');
 Route::post('/post/delete',[PostController::class,'delete']);
 
-Route::get('/dashboard/read/{post}', [ReadController::class, 'read'])->name('read');
-Route::get('/dashboard/unread/{post}', [ReadController::class, 'unread'])->name('unread');
-Route::get('/admin/dashboard/read{post}', [App\Http\Controllers\Admin\Auth\ReadController::class, 'read'])->name('read');
-Route::get('/admin/dashboard/unread/{post}', [App\Http\Controllers\Admin\Auth\ReadController::class, 'unread'])->name('unread');
+// Route::get('/dashboard/read/{post}', [ReadController::class, 'read'])->name('read');
+// Route::get('/admin/dashboard/read{post}', [App\Http\Controllers\Admin\Auth\ReadController::class, 'read'])->name('read');
+
+Route::post('/dashboard/{postId}/read', [ReadController::class, 'read']);
+Route::post('/admin/dashboard/{postId}/read', [App\Http\Controllers\Admin\Auth\ReadController::class, 'read']);
+
 
 Route::get('/admin/post/detail/{id}', [App\Http\Controllers\Admin\Auth\PostController::class, 'detail'])->name('admin.post.detail');
 Route::get('/admin/post/edit/{id}', [App\Http\Controllers\Admin\Auth\PostController::class, 'edit'])->name('admin.post.edit');
