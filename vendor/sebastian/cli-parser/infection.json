@@ -1,8 +1,6 @@
 {
     "source": {
-        "directories": [
-            "src"
-        ]
+        "directories": ["src"]
     },
     "mutators": {
         "@default": true

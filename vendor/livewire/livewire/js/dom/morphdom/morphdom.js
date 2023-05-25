@@ -8,10 +8,16 @@
  * 3) Tagged other changes with "@livewireModification".
  */
 
-'use strict';
+"use strict";
 
-import specialElHandlers from './specialElHandlers';
-import { compareNodeNames, createElementNS, doc, moveChildren, toElement } from './util';
+import specialElHandlers from "./specialElHandlers";
+import {
+    compareNodeNames,
+    createElementNS,
+    doc,
+    moveChildren,
+    toElement,
+} from "./util";
 
 var ELEMENT_NODE = 1;
 var DOCUMENT_FRAGMENT_NODE = 11;
@@ -25,27 +31,29 @@ function defaultGetNodeKey(node) {
 }
 
 function callHook(hook, ...params) {
-    if (hook.name !== 'getNodeKey' && hook.name !== 'onBeforeElUpdated') {
+    if (hook.name !== "getNodeKey" && hook.name !== "onBeforeElUpdated") {
         // console.log(hook.name, ...params)
     }
 
     // Don't call hook on non-"DOMElement" elements.
-    if (typeof params[0].hasAttribute !== 'function') return
+    if (typeof params[0].hasAttribute !== "function") return;
 
-    return hook(...params)
+    return hook(...params);
 }
 
 export default function morphdomFactory(morphAttrs) {
-
     return function morphdom(fromNode, toNode, options) {
         if (!options) {
             options = {};
         }
 
-        if (typeof toNode === 'string') {
-            if (fromNode.nodeName === '#document' || fromNode.nodeName === 'HTML') {
+        if (typeof toNode === "string") {
+            if (
+                fromNode.nodeName === "#document" ||
+                fromNode.nodeName === "HTML"
+            ) {
                 var toNodeHtml = toNode;
-                toNode = doc.createElement('html');
+                toNode = doc.createElement("html");
                 toNode.innerHTML = toNodeHtml;
             } else {
                 toNode = toElement(toNode);
@@ -59,7 +67,8 @@ export default function morphdomFactory(morphAttrs) {
         var onElUpdated = options.onElUpdated || noop;
         var onBeforeNodeDiscarded = options.onBeforeNodeDiscarded || noop;
         var onNodeDiscarded = options.onNodeDiscarded || noop;
-        var onBeforeElChildrenUpdated = options.onBeforeElChildrenUpdated || noop;
+        var onBeforeElChildrenUpdated =
+            options.onBeforeElChildrenUpdated || noop;
         var childrenOnly = options.childrenOnly === true;
 
         // This object is used as a lookup to quickly find all keyed elements in the original DOM tree.
@@ -74,10 +83,12 @@ export default function morphdomFactory(morphAttrs) {
             if (node.nodeType === ELEMENT_NODE) {
                 var curChild = node.firstChild;
                 while (curChild) {
-
                     var key = undefined;
 
-                    if (skipKeyedNodes && (key = callHook(getNodeKey, curChild))) {
+                    if (
+                        skipKeyedNodes &&
+                        (key = callHook(getNodeKey, curChild))
+                    ) {
                         // If we are skipping keyed nodes then we add the key
                         // to a list so that it can be handled at the very end.
                         addKeyedRemoval(key);
@@ -118,7 +129,10 @@ export default function morphdomFactory(morphAttrs) {
         }
 
         function indexTree(node) {
-            if (node.nodeType === ELEMENT_NODE || node.nodeType === DOCUMENT_FRAGMENT_NODE) {
+            if (
+                node.nodeType === ELEMENT_NODE ||
+                node.nodeType === DOCUMENT_FRAGMENT_NODE
+            ) {
                 var curChild = node.firstChild;
                 while (curChild) {
                     var key = callHook(getNodeKey, curChild);
@@ -140,7 +154,7 @@ export default function morphdomFactory(morphAttrs) {
             callHook(onNodeAdded, el);
 
             if (el.skipAddingChildren) {
-                return
+                return;
             }
 
             var curChild = el.firstChild;
@@ -150,15 +164,19 @@ export default function morphdomFactory(morphAttrs) {
                 var key = callHook(getNodeKey, curChild);
                 if (key) {
                     var unmatchedFromEl = fromNodesLookup[key];
-                    if (unmatchedFromEl && compareNodeNames(curChild, unmatchedFromEl)) {
-                        curChild.parentNode.replaceChild(unmatchedFromEl, curChild);
+                    if (
+                        unmatchedFromEl &&
+                        compareNodeNames(curChild, unmatchedFromEl)
+                    ) {
+                        curChild.parentNode.replaceChild(
+                            unmatchedFromEl,
+                            curChild
+                        );
                         morphEl(unmatchedFromEl, curChild);
-                    }
-                    else {
+                    } else {
                         handleNodeAdded(curChild);
                     }
-                }
-                else {
+                } else {
                     handleNodeAdded(curChild);
                 }
 
@@ -179,12 +197,15 @@ export default function morphdomFactory(morphAttrs) {
                 } else {
                     // NOTE: we skip nested keyed nodes from being removed since there is
                     //       still a chance they will be matched up later
-                    removeNode(curFromNodeChild, fromEl, true /* skip keyed nodes */);
+                    removeNode(
+                        curFromNodeChild,
+                        fromEl,
+                        true /* skip keyed nodes */
+                    );
                 }
                 curFromNodeChild = fromNextSibling;
             }
         }
-
 
         function morphEl(fromEl, toEl, childrenOnly) {
             var toElKey = callHook(getNodeKey, toEl);
@@ -204,18 +225,20 @@ export default function morphdomFactory(morphAttrs) {
                 // I added this check to enable wire:ignore.self to not fire
                 // morphAttrs, but not skip updating children as well.
                 // A task that's currently impossible with the provided hooks.
-                if (! fromEl.skipElUpdatingButStillUpdateChildren) {
+                if (!fromEl.skipElUpdatingButStillUpdateChildren) {
                     morphAttrs(fromEl, toEl);
                 }
 
                 callHook(onElUpdated, fromEl);
 
-                if (callHook(onBeforeElChildrenUpdated, fromEl, toEl) === false) {
+                if (
+                    callHook(onBeforeElChildrenUpdated, fromEl, toEl) === false
+                ) {
                     return;
                 }
             }
 
-            if (fromEl.nodeName !== 'TEXTAREA') {
+            if (fromEl.nodeName !== "TEXTAREA") {
                 morphChildren(fromEl, toEl);
             } else {
                 if (fromEl.innerHTML != toEl.innerHTML) {
@@ -246,7 +269,10 @@ export default function morphdomFactory(morphAttrs) {
                 while (curFromNodeChild) {
                     fromNextSibling = curFromNodeChild.nextSibling;
 
-                    if (curToNodeChild.isSameNode && curToNodeChild.isSameNode(curFromNodeChild)) {
+                    if (
+                        curToNodeChild.isSameNode &&
+                        curToNodeChild.isSameNode(curFromNodeChild)
+                    ) {
                         curToNodeChild = toNextSibling;
                         curFromNodeChild = fromNextSibling;
                         continue outer;
@@ -270,8 +296,13 @@ export default function morphdomFactory(morphAttrs) {
                                     // The current element in the original DOM tree does not have a matching key so
                                     // let's check our lookup to see if there is a matching element in the original
                                     // DOM tree
-                                    if ((matchingFromEl = fromNodesLookup[curToNodeKey])) {
-                                        if (fromNextSibling === matchingFromEl) {
+                                    if (
+                                        (matchingFromEl =
+                                            fromNodesLookup[curToNodeKey])
+                                    ) {
+                                        if (
+                                            fromNextSibling === matchingFromEl
+                                        ) {
                                             // Special case for single element removals. To avoid removing the original
                                             // DOM node out of the tree (since that can break CSS transitions, etc.),
                                             // we will instead discard the current node and wait until the next
@@ -286,7 +317,10 @@ export default function morphdomFactory(morphAttrs) {
                                             // NOTE: We use insertBefore instead of replaceChild because we want to go through
                                             // the `removeNode()` function for the node that is being discarded so that
                                             // all lifecycle hooks are correctly invoked
-                                            fromEl.insertBefore(matchingFromEl, curFromNodeChild);
+                                            fromEl.insertBefore(
+                                                matchingFromEl,
+                                                curFromNodeChild
+                                            );
 
                                             // fromNextSibling = curFromNodeChild.nextSibling;
                                             if (curFromNodeKey) {
@@ -296,7 +330,11 @@ export default function morphdomFactory(morphAttrs) {
                                             } else {
                                                 // NOTE: we skip nested keyed nodes from being removed since there is
                                                 //       still a chance they will be matched up later
-                                                removeNode(curFromNodeChild, fromEl, true /* skip keyed nodes */);
+                                                removeNode(
+                                                    curFromNodeChild,
+                                                    fromEl,
+                                                    true /* skip keyed nodes */
+                                                );
                                             }
 
                                             curFromNodeChild = matchingFromEl;
@@ -312,18 +350,27 @@ export default function morphdomFactory(morphAttrs) {
                                 isCompatible = false;
                             }
 
-                            isCompatible = isCompatible !== false && compareNodeNames(curFromNodeChild, curToNodeChild);
+                            isCompatible =
+                                isCompatible !== false &&
+                                compareNodeNames(
+                                    curFromNodeChild,
+                                    curToNodeChild
+                                );
                             if (isCompatible) {
                                 // @livewireModification
                                 // If the two nodes are different, but the next element is an exact match,
                                 // we can assume that the new node is meant to be inserted, instead of
                                 // used as a morph target.
                                 if (
-                                    ! curToNodeChild.isEqualNode(curFromNodeChild)
-                                    && curToNodeChild.nextElementSibling
-                                    && curToNodeChild.nextElementSibling.isEqualNode(curFromNodeChild)
+                                    !curToNodeChild.isEqualNode(
+                                        curFromNodeChild
+                                    ) &&
+                                    curToNodeChild.nextElementSibling &&
+                                    curToNodeChild.nextElementSibling.isEqualNode(
+                                        curFromNodeChild
+                                    )
                                 ) {
-                                    isCompatible = false
+                                    isCompatible = false;
                                 } else {
                                     // We found compatible DOM elements so transform
                                     // the current "from" node to match the current
@@ -332,14 +379,20 @@ export default function morphdomFactory(morphAttrs) {
                                     morphEl(curFromNodeChild, curToNodeChild);
                                 }
                             }
-
-                        } else if (curFromNodeType === TEXT_NODE || curFromNodeType == COMMENT_NODE) {
+                        } else if (
+                            curFromNodeType === TEXT_NODE ||
+                            curFromNodeType == COMMENT_NODE
+                        ) {
                             // Both nodes being compared are Text or Comment nodes
                             isCompatible = true;
                             // Simply update nodeValue on the original node to
                             // change the text value
-                            if (curFromNodeChild.nodeValue !== curToNodeChild.nodeValue) {
-                                curFromNodeChild.nodeValue = curToNodeChild.nodeValue;
+                            if (
+                                curFromNodeChild.nodeValue !==
+                                curToNodeChild.nodeValue
+                            ) {
+                                curFromNodeChild.nodeValue =
+                                    curToNodeChild.nodeValue;
                             }
                         }
                     }
@@ -357,11 +410,17 @@ export default function morphdomFactory(morphAttrs) {
                     // element in the "to" list. If it is, we can assume we can insert the new
                     // element before the original one instead of removing it. This is kind of
                     // a "look-ahead".
-                    if (curToNodeChild.nextElementSibling && curToNodeChild.nextElementSibling.isEqualNode(curFromNodeChild)) {
-                        const nodeToBeAdded = curToNodeChild.cloneNode(true)
-                        fromEl.insertBefore(nodeToBeAdded, curFromNodeChild)
-                        handleNodeAdded(nodeToBeAdded)
-                        curToNodeChild = curToNodeChild.nextElementSibling.nextSibling;
+                    if (
+                        curToNodeChild.nextElementSibling &&
+                        curToNodeChild.nextElementSibling.isEqualNode(
+                            curFromNodeChild
+                        )
+                    ) {
+                        const nodeToBeAdded = curToNodeChild.cloneNode(true);
+                        fromEl.insertBefore(nodeToBeAdded, curFromNodeChild);
+                        handleNodeAdded(nodeToBeAdded);
+                        curToNodeChild =
+                            curToNodeChild.nextElementSibling.nextSibling;
                         curFromNodeChild = fromNextSibling;
                         continue outer;
                     } else {
@@ -378,7 +437,11 @@ export default function morphdomFactory(morphAttrs) {
                         } else {
                             // NOTE: we skip nested keyed nodes from being removed since there is
                             //       still a chance they will be matched up later
-                            removeNode(curFromNodeChild, fromEl, true /* skip keyed nodes */);
+                            removeNode(
+                                curFromNodeChild,
+                                fromEl,
+                                true /* skip keyed nodes */
+                            );
                         }
                     }
 
@@ -389,19 +452,28 @@ export default function morphdomFactory(morphAttrs) {
                 // our "to node" and we exhausted all of the children "from"
                 // nodes. Therefore, we will just append the current "to" node
                 // to the end
-                if (curToNodeKey && (matchingFromEl = fromNodesLookup[curToNodeKey]) && compareNodeNames(matchingFromEl, curToNodeChild)) {
+                if (
+                    curToNodeKey &&
+                    (matchingFromEl = fromNodesLookup[curToNodeKey]) &&
+                    compareNodeNames(matchingFromEl, curToNodeChild)
+                ) {
                     fromEl.appendChild(matchingFromEl);
                     // MORPH
                     morphEl(matchingFromEl, curToNodeChild);
                 } else {
-                    var onBeforeNodeAddedResult = callHook(onBeforeNodeAdded, curToNodeChild);
+                    var onBeforeNodeAddedResult = callHook(
+                        onBeforeNodeAdded,
+                        curToNodeChild
+                    );
                     if (onBeforeNodeAddedResult !== false) {
                         if (onBeforeNodeAddedResult) {
                             curToNodeChild = onBeforeNodeAddedResult;
                         }
 
                         if (curToNodeChild.actualize) {
-                            curToNodeChild = curToNodeChild.actualize(fromEl.ownerDocument || doc);
+                            curToNodeChild = curToNodeChild.actualize(
+                                fromEl.ownerDocument || doc
+                            );
                         }
                         fromEl.appendChild(curToNodeChild);
                         handleNodeAdded(curToNodeChild);
@@ -415,7 +487,7 @@ export default function morphdomFactory(morphAttrs) {
             cleanupFromEl(fromEl, curFromNodeChild, curFromNodeKey);
 
             var specialElHandler = specialElHandlers[fromEl.nodeName];
-            if (specialElHandler && ! fromEl.isLivewireModel) {
+            if (specialElHandler && !fromEl.isLivewireModel) {
                 specialElHandler(fromEl, toEl);
             }
         } // END: morphChildren(...)
@@ -431,13 +503,23 @@ export default function morphdomFactory(morphAttrs) {
                 if (toNodeType === ELEMENT_NODE) {
                     if (!compareNodeNames(fromNode, toNode)) {
                         callHook(onNodeDiscarded, fromNode);
-                        morphedNode = moveChildren(fromNode, createElementNS(toNode.nodeName, toNode.namespaceURI));
+                        morphedNode = moveChildren(
+                            fromNode,
+                            createElementNS(
+                                toNode.nodeName,
+                                toNode.namespaceURI
+                            )
+                        );
                     }
                 } else {
                     // Going from an element node to a text node
                     morphedNode = toNode;
                 }
-            } else if (morphedNodeType === TEXT_NODE || morphedNodeType === COMMENT_NODE) { // Text or comment node
+            } else if (
+                morphedNodeType === TEXT_NODE ||
+                morphedNodeType === COMMENT_NODE
+            ) {
+                // Text or comment node
                 if (toNodeType === morphedNodeType) {
                     if (morphedNode.nodeValue !== toNode.nodeValue) {
                         morphedNode.nodeValue = toNode.nodeValue;
@@ -468,7 +550,7 @@ export default function morphdomFactory(morphAttrs) {
             // it out of fromNodesLookup and we use fromNodesLookup to determine
             // if a keyed node has been matched up or not
             if (keyedRemovalList) {
-                for (var i=0, len=keyedRemovalList.length; i<len; i++) {
+                for (var i = 0, len = keyedRemovalList.length; i < len; i++) {
                     var elToRemove = fromNodesLookup[keyedRemovalList[i]];
                     if (elToRemove) {
                         removeNode(elToRemove, elToRemove.parentNode, false);
@@ -479,7 +561,9 @@ export default function morphdomFactory(morphAttrs) {
 
         if (!childrenOnly && morphedNode !== fromNode && fromNode.parentNode) {
             if (morphedNode.actualize) {
-                morphedNode = morphedNode.actualize(fromNode.ownerDocument || doc);
+                morphedNode = morphedNode.actualize(
+                    fromNode.ownerDocument || doc
+                );
             }
             // If we had to swap out the from node with a new node because the old
             // node was not compatible with the target node then we need to

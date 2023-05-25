@@ -6,8 +6,8 @@
 
 The following dependency versions have been updated:
 
-- The minimum PHP version is now v8.0.2
-- The minimum Laravel version is now v9.21
+-   The minimum PHP version is now v8.0.2
+-   The minimum Laravel version is now v9.21
 
 ### New `expires_at` Column
 

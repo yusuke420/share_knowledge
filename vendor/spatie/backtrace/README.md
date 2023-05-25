@@ -11,7 +11,7 @@ This package provides a better way than `debug_backtrace` to work with a back tr
 
 ```php
 // returns an array with `Spatie\Backtrace\Frame` instances
-$frames = Spatie\Backtrace\Backtrace::create()->frames(); 
+$frames = Spatie\Backtrace\Backtrace::create()->frames();
 
 $firstFrame = $frames[0];
 
@@ -57,13 +57,13 @@ $frames = $backtrace->frames(); // contains an array with `Spatie\Backtrace\Fram
 
 A `Spatie\Backtrace\Frame` has these properties:
 
-- `file`: the name of the file
-- `lineNumber`: the line number
-- `arguments`: the arguments used for this frame. Will be `null` if `withArguments` was not used.
-- `class`: the class name for this frame. Will be `null` if the frame concerns a function.
-- `method`: the method used in this frame
-- `applicationFrame`: contains `true` is this frame belongs to your application, and `false` if it belongs to a file in
-  the vendor directory
+-   `file`: the name of the file
+-   `lineNumber`: the line number
+-   `arguments`: the arguments used for this frame. Will be `null` if `withArguments` was not used.
+-   `class`: the class name for this frame. Will be `null` if the frame concerns a function.
+-   `method`: the method used in this frame
+-   `applicationFrame`: contains `true` is this frame belongs to your application, and `false` if it belongs to a file in
+    the vendor directory
 
 ### Collecting arguments
 
@@ -119,7 +119,7 @@ $frames = Spatie\Backtrace\Backtrace::create()
     ->frames();
 ```
 
-###  Getting a backtrace for a throwable
+### Getting a backtrace for a throwable
 
 Here's how you can get a backtrace for a throwable.
 
@@ -131,7 +131,7 @@ Because we will use the backtrace that is already available the throwable, the f
 
 ## Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -149,8 +149,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Freek Van de Herten](https://github.com/freekmurze)
-- [All Contributors](../../contributors)
+-   [Freek Van de Herten](https://github.com/freekmurze)
+-   [All Contributors](../../contributors)
 
 ## License
 

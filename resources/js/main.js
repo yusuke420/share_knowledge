@@ -1,16 +1,18 @@
-'use strict';
+"use strict";
 
-$(document).ready(function() {
-    $('.read-button').click(async function() {
-        var postId = $(this).data('post-id');
+$(document).ready(function () {
+    $(".read-button").click(async function () {
+        var postId = $(this).data("post-id");
         try {
             const response = await fetch(`/dashboard/${postId}/read`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Content-Type': 'application/json'
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify({})
+                body: JSON.stringify({}),
             });
             const data = await response.json();
             const CHECK = document.querySelectorAll(".check")[i];
@@ -21,7 +23,7 @@ $(document).ready(function() {
                 CHECK.classList.toggle("");
             }
         } catch (error) {
-            console.error('エラーが発生しました:', error);
+            console.error("エラーが発生しました:", error);
         }
     });
 });

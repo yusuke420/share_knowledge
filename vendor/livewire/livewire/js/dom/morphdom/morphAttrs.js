@@ -6,9 +6,10 @@
 
 export default function morphAttrs(fromNode, toNode) {
     // @alpinejs
-    if (fromNode._x_isShown !== undefined && toNode._x_isShown !== undefined) return
-    if (fromNode._x_isShown && ! toNode._x_isShown) return
-    if (! fromNode._x_isShown && toNode._x_isShown) return
+    if (fromNode._x_isShown !== undefined && toNode._x_isShown !== undefined)
+        return;
+    if (fromNode._x_isShown && !toNode._x_isShown) return;
+    if (!fromNode._x_isShown && toNode._x_isShown) return;
 
     var attrs = toNode.attributes;
     var i;
@@ -30,7 +31,7 @@ export default function morphAttrs(fromNode, toNode) {
             fromValue = fromNode.getAttributeNS(attrNamespaceURI, attrName);
 
             if (fromValue !== attrValue) {
-                if (attr.prefix === 'xmlns'){
+                if (attr.prefix === "xmlns") {
                     attrName = attr.name; // It's not allowed to set an attribute with the XMLNS namespace without specifying the `xmlns` prefix
                 }
                 fromNode.setAttributeNS(attrNamespaceURI, attrName, attrValue);

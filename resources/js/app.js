@@ -1,7 +1,7 @@
-require('./bootstrap');
-require('./main');
+require("./bootstrap");
+require("./main");
 
-import Alpine from 'alpinejs';
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 

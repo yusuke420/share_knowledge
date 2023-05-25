@@ -42,8 +42,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Spatie](https://spatie.be)
-- [All Contributors](../../contributors)
+-   [Spatie](https://spatie.be)
+-   [All Contributors](../../contributors)
 
 ## License
 

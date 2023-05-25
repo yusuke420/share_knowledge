@@ -228,10 +228,10 @@ To use the solution provider, you should pass it to `addSolutionProviders` when 
 
 By default, the solution provider will send these bits of info to Open AI:
 
-- the error message
-- the error class
-- the stack frame
-- other small bits of info of context surrounding your error
+-   the error message
+-   the error class
+-   the stack frame
+-   other small bits of info of context surrounding your error
 
 It will not send the request payload or any environment variables to avoid sending sensitive data to OpenAI.
 
@@ -245,7 +245,7 @@ public function useCache(CacheInterface $cache, int $cacheTtlInSeconds = 60 * 60
 
 #### Hinting the application type
 
-To increase the quality of the suggested solutions, you can send along the application type (Symfony, Drupal, WordPress, ...) to the AI. 
+To increase the quality of the suggested solutions, you can send along the application type (Symfony, Drupal, WordPress, ...) to the AI.
 
 To send the application type call `applicationType` on the solution provider.
 
@@ -398,25 +398,24 @@ Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTI
 
 Here are the steps you'll need to perform if you want to work on the UI of Ignition.
 
-- clone (or move) `spatie/ignition`, `spatie/ignition-ui`, `spatie/laravel-ignition`, `spatie/flare-client-php` and `spatie/ignition-test` into the same directory (e.g. `~/code/flare`)
-- create a new `package.json` file in `~/code/flare` directory:
+-   clone (or move) `spatie/ignition`, `spatie/ignition-ui`, `spatie/laravel-ignition`, `spatie/flare-client-php` and `spatie/ignition-test` into the same directory (e.g. `~/code/flare`)
+-   create a new `package.json` file in `~/code/flare` directory:
+
 ```json
 {
     "private": true,
-    "workspaces": [
-        "ignition-ui",
-        "ignition"
-    ]
+    "workspaces": ["ignition-ui", "ignition"]
 }
 ```
-- run `yarn install` in the `~/code/flare` directory
-- in the `~/code/flare/ignition-test` directory
-    - run `composer update`
-    - run `cp .env.example .env`
-    - run `php artisan key:generate`
-- http://ignition-test.test/ should now work (= show the new UI). If you use valet, you might want to run `valet park` inside the `~/code/flare` directory.
-    - http://ignition-test.test/ has a bit of everything
-    - http://ignition-test.test/sql-error has a solution and SQL exception
+
+-   run `yarn install` in the `~/code/flare` directory
+-   in the `~/code/flare/ignition-test` directory
+    -   run `composer update`
+    -   run `cp .env.example .env`
+    -   run `php artisan key:generate`
+-   http://ignition-test.test/ should now work (= show the new UI). If you use valet, you might want to run `valet park` inside the `~/code/flare` directory.
+    -   http://ignition-test.test/ has a bit of everything
+    -   http://ignition-test.test/sql-error has a solution and SQL exception
 
 ## Security Vulnerabilities
 
@@ -424,8 +423,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Spatie](https://spatie.be)
-- [All Contributors](../../contributors)
+-   [Spatie](https://spatie.be)
+-   [All Contributors](../../contributors)
 
 ## License
 

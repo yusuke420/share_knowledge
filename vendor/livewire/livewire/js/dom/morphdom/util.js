@@ -1,12 +1,13 @@
 var range; // Create a range object for efficently rendering strings to elements.
-var NS_XHTML = 'http://www.w3.org/1999/xhtml';
+var NS_XHTML = "http://www.w3.org/1999/xhtml";
 
-export var doc = typeof document === 'undefined' ? undefined : document;
-var HAS_TEMPLATE_SUPPORT = !!doc && 'content' in doc.createElement('template');
-var HAS_RANGE_SUPPORT = !!doc && doc.createRange && 'createContextualFragment' in doc.createRange();
+export var doc = typeof document === "undefined" ? undefined : document;
+var HAS_TEMPLATE_SUPPORT = !!doc && "content" in doc.createElement("template");
+var HAS_RANGE_SUPPORT =
+    !!doc && doc.createRange && "createContextualFragment" in doc.createRange();
 
 function createFragmentFromTemplate(str) {
-    var template = doc.createElement('template');
+    var template = doc.createElement("template");
     template.innerHTML = str;
     return template.content.childNodes[0];
 }
@@ -22,7 +23,7 @@ function createFragmentFromRange(str) {
 }
 
 function createFragmentFromWrap(str) {
-    var fragment = doc.createElement('body');
+    var fragment = doc.createElement("body");
     fragment.innerHTML = str;
     return fragment.childNodes[0];
 }
@@ -38,12 +39,12 @@ function createFragmentFromWrap(str) {
 export function toElement(str) {
     str = str.trim();
     if (HAS_TEMPLATE_SUPPORT) {
-      // avoid restrictions on content for things like `<tr><th>Hi</th></tr>` which
-      // createContextualFragment doesn't support
-      // <template> support not available in IE
-      return createFragmentFromTemplate(str);
+        // avoid restrictions on content for things like `<tr><th>Hi</th></tr>` which
+        // createContextualFragment doesn't support
+        // <template> support not available in IE
+        return createFragmentFromTemplate(str);
     } else if (HAS_RANGE_SUPPORT) {
-      return createFragmentFromRange(str);
+        return createFragmentFromRange(str);
     }
 
     return createFragmentFromWrap(str);
@@ -67,9 +68,11 @@ export function compareNodeNames(fromEl, toEl) {
         return true;
     }
 
-    if (toEl.actualize &&
-        fromNodeName.charCodeAt(0) < 91 && /* from tag name is upper case */
-        toNodeName.charCodeAt(0) > 90 /* target tag name is lower case */) {
+    if (
+        toEl.actualize &&
+        fromNodeName.charCodeAt(0) < 91 /* from tag name is upper case */ &&
+        toNodeName.charCodeAt(0) > 90 /* target tag name is lower case */
+    ) {
         // If the target element is a virtual DOM node then we may need to normalize the tag name
         // before comparing. Normal HTML elements that are in the "http://www.w3.org/1999/xhtml"
         // are converted to upper case
@@ -89,9 +92,9 @@ export function compareNodeNames(fromEl, toEl) {
  * @return {Element}
  */
 export function createElementNS(name, namespaceURI) {
-    return !namespaceURI || namespaceURI === NS_XHTML ?
-        doc.createElement(name) :
-        doc.createElementNS(namespaceURI, name);
+    return !namespaceURI || namespaceURI === NS_XHTML
+        ? doc.createElement(name)
+        : doc.createElementNS(namespaceURI, name);
 }
 
 /**

@@ -21,7 +21,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Testing
 
-``` bash
+```bash
 composer test
 ```
 
@@ -36,4 +36,3 @@ If you discover any security related issues, please email support@flareapp.io in
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-

@@ -158,12 +158,12 @@ php artisan vendor:publish --tag=your-package-name-views
 ```
 
 > **Note:**
-> 
+>
 > If you use custom view namespace then you should change your publish command like this:
+
 ```bash
 php artisan vendor:publish --tag=custom-view-namespace-views
 ```
-
 
 ### Sharing global data with views
 
@@ -211,8 +211,8 @@ To register a view composer with all views, use an asterisk as the view name `'*
 $package
     ->name('your-package-name')
     ->hasViewComposer('viewName', MyViewComposer::class)
-    ->hasViewComposer('*', function($view) { 
-        $view->with('sharedVariable', 123); 
+    ->hasViewComposer('*', function($view) {
+        $view->with('sharedVariable', 123);
     });
 ```
 
@@ -262,7 +262,7 @@ For example, creating `<package root>/resources/lang/it.json` file like so:
 
 ```php
 trans('Hello!');
-``` 
+```
 
 ...will be `Ciao!` if the application uses the Italian language.
 
@@ -368,7 +368,7 @@ You can register any command you package provides with the `hasCommand` function
 $package
     ->name('your-package-name')
     ->hasCommand(YourCoolPackageCommand::class);
-````
+```
 
 If your package provides multiple commands, you can either use `hasCommand` multiple times, or pass an array
 to `hasCommands`
@@ -426,13 +426,13 @@ php artisan your-package-name:install
 
 Using the code above, that command will:
 
-- publish the config file
-- publish the assets
-- publish the migrations
-- copy the `/resources/stubs/MyProviderName.php.stub` from your package to `app/Providers/MyServiceProviderName.php`, and also register that
-  provider in `config/app.php`
-- ask if migrations should be run now
-- prompt the user to open up `https://github.com/'your-vendor/your-repo-name'` in the browser in order to star it
+-   publish the config file
+-   publish the assets
+-   publish the migrations
+-   copy the `/resources/stubs/MyProviderName.php.stub` from your package to `app/Providers/MyServiceProviderName.php`, and also register that
+    provider in `config/app.php`
+-   ask if migrations should be run now
+-   prompt the user to open up `https://github.com/'your-vendor/your-repo-name'` in the browser in order to star it
 
 You can also call `startWith` and `endWith` on the `InstallCommand`. They will respectively be executed at the start and
 end when running `php artisan your-package-name:install`. You can use this to perform extra work or display extra
@@ -490,10 +490,10 @@ $package
 
 You can put any custom logic your package needs while starting up in one of these methods:
 
-- `registeringPackage`: will be called at the start of the `register` method of `PackageServiceProvider`
-- `packageRegistered`: will be called at the end of the `register` method of `PackageServiceProvider`
-- `bootingPackage`: will be called at the start of the `boot` method of `PackageServiceProvider`
-- `packageBooted`: will be called at the end of the `boot` method of `PackageServiceProvider`
+-   `registeringPackage`: will be called at the start of the `register` method of `PackageServiceProvider`
+-   `packageRegistered`: will be called at the end of the `register` method of `PackageServiceProvider`
+-   `bootingPackage`: will be called at the start of the `boot` method of `PackageServiceProvider`
+-   `packageBooted`: will be called at the end of the `boot` method of `PackageServiceProvider`
 
 ## Testing
 
@@ -515,8 +515,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Freek Van der Herten](https://github.com/freekmurze)
-- [All Contributors](../../contributors)
+-   [Freek Van der Herten](https://github.com/freekmurze)
+-   [All Contributors](../../contributors)
 
 ## License
 

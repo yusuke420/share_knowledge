@@ -4,11 +4,11 @@ All notable changes to phar-io/manifest are documented in this file using the [K
 
 ## [2.0.3] - 20.07.2021
 
-- Fixed PHP 7.2 / PHP 7.3 incompatibility introduced in previous release
+-   Fixed PHP 7.2 / PHP 7.3 incompatibility introduced in previous release
 
 ## [2.0.2] - 20.07.2021
 
-- Fixed PHP 8.1 deprecation notice
+-   Fixed PHP 8.1 deprecation notice
 
 ## [2.0.1] - 27.06.2020
 
@@ -20,9 +20,9 @@ This release now requires PHP 7.2+
 
 ### Changed
 
-- Upgraded to phar-io/version 3.0
-    - Version strings `v1.2.3` will now be converted to valid semantic version strings `1.2.3`
-    - Abreviated strings like `1.0` will get expaneded to `1.0.0`  
+-   Upgraded to phar-io/version 3.0
+    -   Version strings `v1.2.3` will now be converted to valid semantic version strings `1.2.3`
+    -   Abreviated strings like `1.0` will get expaneded to `1.0.0`
 
 ### Unreleased
 
