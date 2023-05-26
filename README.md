@@ -40,5 +40,5 @@ PHP 自作
 MAMP version6.8/MySQL version5.7.39/PHP version8.2.0
 
 ## データベース
-データベース名：share_knowledge
+データベース名：share_knowledge  
 テーブル：お使いのphpMyAdminに上のデータベースを作り、入っているshare_knowledge.sqlをインポートしていただければお使いいただけると思います。
