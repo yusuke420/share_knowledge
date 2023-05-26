@@ -4,7 +4,7 @@
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl">
                 {{ __('ユーザーリスト') }}
             </h2>
-            <form class="mt-4 shadow-lg" action="{{ route('searchResultUser') }}" method="GET">
+            <form class="mt-4 shadow-lg" action="{{ route('admin.searchResultUser') }}" method="GET">
             @csrf
                 <div class="flex">
                     <div class="relative w-full user-search-form">

@@ -59,7 +59,7 @@ Route::get('/admin/searchResultPost', [App\Http\Controllers\Admin\Auth\PostContr
 Route::get('sortResultPost', [PostController::class, 'controllerSortPost'])->name('sortResultPost');
 Route::get('/admin/sortResultPost', [App\Http\Controllers\Admin\Auth\PostController::class, 'controllerSortPost'])->name('admin.sortResultPost');
 
-Route::get('searchResultUser', [UserController::class, 'controllerSearchUser'])->name('searchResultUser');
+Route::get('/admin/searchResultUser', [UserController::class, 'controllerSearchUser'])->name('admin.searchResultUser');
 
 Route::get('/admin/users-list', [UserController::class, 'show'])->name('admin.user-list.show');
 Route::post('/users-list/edit',[UserController::class,'edit']);
