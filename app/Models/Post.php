@@ -42,15 +42,9 @@ class Post extends Model
     }
 
     public function reads() {
-        return $this->hasMany('App\Models\Read');
+        return $this->hasMany(Read::class);
     }
 
-    /**
-     * 投稿に既読しているかどうか
-     *
-     * @param integer $user
-     * @return boolean
-     */
     public function isReadBy($user) {
         return $this->reads()->where('user_id', $user)->exists();
     }

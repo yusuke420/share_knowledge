@@ -16,4 +16,15 @@ class Read extends Model
     public function post() {
         return $this->belongsTo('App\Models\Post');
     }
+
+        /**
+     * 投稿に既読しているかどうか
+     *
+     * @param integer $user
+     * @return boolean
+     */
+    public function isReadBy($user) {
+        return $this->reads()->where('user_id', $user)->exists();
+    }
+
 }

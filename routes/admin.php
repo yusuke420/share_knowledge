@@ -64,7 +64,3 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth:admin')
                 ->name('logout');
-
-Route::get('/post', [PostController::class, 'create'])->name('admin.post.create');
-Route::post('/post', [PostController::class, 'store'])->name('admin.post.store');
-

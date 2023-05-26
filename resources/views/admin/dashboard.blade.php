@@ -54,18 +54,18 @@
                                 <div>
                         @endswitch
                             <h5 class="p-4">{{ $post->title }}</h5>
-                            {{-- <span>
+                            <span>
                                 <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
                                     <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">
                                         <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
                                     </button>
                                 </a>
-                            </span> --}}
-                            <span>
+                            </span>
+                            {{-- <span>
                                 <button class="absolute top-0 right-0 px-4 py-2 read-button" id="{{ $post->id }}" type="button">
                                     <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check check active' : 'fa-regular fa-square check' }}" style="color: #000000;"></i>
                                 </button>
-                            </span>
+                            </span> --}}
                             <p class="absolute right-0 px-2" style="top: 3.5rem;">{{ \Carbon\Carbon::parse($post->created_at)->format('Y/m/d') }}</p>
                         </div>
                         <p class="p-4">{{ $post->body }}</p>
