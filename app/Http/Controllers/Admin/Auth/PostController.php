@@ -68,16 +68,14 @@ class PostController extends Controller
     }
 
 
-    public function detail(Request $request, int $id)
+    public function detail(Request $request, Post $post)
     {
-        $post = Post::where('id', $id)->first();
         $users = DB::table('users')->select('id', 'name', 'email', 'created_at')->get();
         return view('admin.detail', compact('post','users'));
     }
 
-    public function edit(Request $request, int $id)
+    public function edit(Request $request, Post $post)
     {
-        $post = Post::where('id', $id)->first();
 		return view('admin.auth.edit', compact('post'));
     }
 

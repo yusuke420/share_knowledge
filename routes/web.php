@@ -43,14 +43,14 @@ Route::post('/admin/post', [App\Http\Controllers\Admin\Auth\PostController::clas
 Route::post('/post/delete',[PostController::class,'delete']);
 
 Route::get('/dashboard/read/{post}', [ReadController::class, 'read'])->name('read');
-Route::get('/admin/dashboard/read{post}', [App\Http\Controllers\Admin\Auth\ReadController::class, 'read'])->name('read');
+Route::get('/admin/dashboard/read/{post}', [App\Http\Controllers\Admin\Auth\ReadController::class, 'read'])->name('read');
 
 // Route::post('/dashboard/{postId}/read', [ReadController::class, 'read']);
 // Route::post('/admin/dashboard/{postId}/read', [App\Http\Controllers\Admin\Auth\ReadController::class, 'read']);
 
 
-Route::get('/admin/post/detail/{id}', [App\Http\Controllers\Admin\Auth\PostController::class, 'detail'])->name('admin.post.detail');
-Route::get('/admin/post/edit/{id}', [App\Http\Controllers\Admin\Auth\PostController::class, 'edit'])->name('admin.post.edit');
+Route::get('/admin/post/detail/{post}', [App\Http\Controllers\Admin\Auth\PostController::class, 'detail'])->name('admin.post.detail');
+Route::get('/admin/post/edit/{post}', [App\Http\Controllers\Admin\Auth\PostController::class, 'edit'])->name('admin.post.edit');
 Route::post('/admin/dashboard', [App\Http\Controllers\Admin\Auth\PostController::class, 'update'])->name('admin.post.update');
 
 Route::get('searchResultPost', [PostController::class, 'controllerSearchPost'])->name('searchResultPost');
