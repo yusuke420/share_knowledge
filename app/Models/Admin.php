@@ -47,32 +47,12 @@ class Admin extends Authenticatable
     //多対多のリレーションを書く
     public function reads()
     {
-        return $this->belongsToMany('App\Models\Post','post_user','user_id','post_id')->withTimestamps();
+        return $this->belongsToMany('App\Models\Post','reads','user_id','post_id')->withTimestamps();
     }
 
     //この投稿に対して既に既読しているかどうかを判別する
-    public function isRead($postId)
+    public function isRead(Post $post)
     {
-    return $this->reads()->where('post_id',$postId)->exists();
-    }
-
-    //isReadを使って、既に既読したか確認したあと、既読する（重複させない）
-    public function read($postId)
-    {
-        if($this->isRead($postId)){
-            //もし既に既読していたら何もしない
-        } else {
-            $this->reads()->attach($postId);
-        }
-    }
-
-    //isReadを使って、既に既読したか確認して、もししていたら解除する
-    public function unread($postId)
-    {
-        if($this->isRead($postId)){
-            //もし既に既読していたら消す
-            $this->reads()->detach($postId);
-        } else {
-        }
+        return $this->reads()->where('post_id',$post)->exists();
     }
 }

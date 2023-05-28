@@ -79,6 +79,51 @@ class PostController extends Controller
 		return view('admin.auth.edit', compact('post'));
     }
 
+    /**
+	 * お問い合わせフォーム データベース登録・編集
+	 */
+	public function update(Request $request)
+	{
+		$post = new Post();
+		// actionの値を取得
+		$action = $request->input('action');
+		// action以外のinputの値を取得
+		$inputs = $request->except('action');
+
+		$referer = $inputs['referer'];
+		$id = $inputs['id'];
+
+		// 戻り先を振り分ける
+		if ($referer === 'contact') {
+			$backPage = 'admin.dashboard';
+		} elseif ($referer === 'edit') {
+			$backPage = 'admin.auth.edit';
+		}
+
+		//actionの値で分岐
+		if ($action !== 'submit') {
+			// 戻るボタンでリダイレクト
+			return redirect()
+				->route($backPage, ['id' => $id])
+				->withInput($inputs);
+		} else {
+			// 二重送信対策 トークン再発行
+			$request->session()->regenerateToken();
+
+			if ($referer === 'contact') {
+				//DB登録
+				$data = $request->all();
+				$post->addMessage($data);
+			} elseif ($referer === 'edit') {
+				//DB編集
+				$data = $request->all();
+				$post->updateMessage($data, $id);
+			}
+			return view('admin.dashboard');
+		}
+	}
+
+
     use SoftDeletes;
 
     /**

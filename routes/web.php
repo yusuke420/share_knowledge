@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReadController;
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('survey/{survey}', [SurveyController::class, 'show'])->name('survey.show');
+    Route::get('survey/result/{survey?}', [SurveyController::class, 'result'])->name('survey.result');
+    Route::post('survey', [SurveyController::class, 'store'])->name('survey.store');
 });
 
 Route::prefix('admin')->name('admin.')->group(function() {
@@ -40,6 +44,9 @@ Route::prefix('admin')->name('admin.')->group(function() {
 
 Route::get('/admin/post', [App\Http\Controllers\Admin\Auth\PostController::class, 'create'])->name('admin.post.create');
 Route::post('/admin/post', [App\Http\Controllers\Admin\Auth\PostController::class, 'store'])->name('admin.post.store');
+
+Route::get('/admin/survey', [SurveyController::class, 'create'])->name('admin.survey.create');
+
 Route::post('/post/delete',[PostController::class,'delete']);
 
 Route::get('/dashboard/read/{post}', [ReadController::class, 'read'])->name('read');

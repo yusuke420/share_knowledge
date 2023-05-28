@@ -43,20 +43,23 @@
                         @switch($post->importance)
                             @case(1)
                                 <div style="background-color: #E02424; height: 5rem;" class="flex w-full">
+                                    <h5 class="p-4 text-lg font-bold">{{ $post->title }}</h5>
                                 @break
                             @case(2)
                                 <div style="background-color: #FACA15; height: 5rem;" class="flex w-full">
+                                    <h5 class="p-4 text-lg font-bold">{{ $post->title }}</h5>
                                 @break
                             @case(3)
                                 <div style="background-color: #1C64F2; height: 5rem;" class="flex w-full">
+                                    <h5 class="p-4 text-lg font-bold">{{ $post->title }}</h5>
                                 @break
                             @default
-                                <div>
+                                <div style="height: 5rem;" class="flex w-full">
+                                    <h5 class="p-4 text-lg font-bold">{{ $post->title }}</h5>
                         @endswitch
-                            <h5 class="p-4">{{ $post->title }}</h5>
                             <span>
                                 <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
-                                    <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">
+                                    <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">既読
                                         <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
                                     </button>
                                 </a>
@@ -91,9 +94,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white">
+                        <a href="{{ route('admin.survey.create') }}" class="flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white">
                             <svg aria-hidden="true" class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path></svg>
-                            <span class="text-sm font-medium">周知を編集</span>
+                            <span class="text-sm font-medium">アンケート作成</span>
                         </a>
                     </li>
                 </ul>
