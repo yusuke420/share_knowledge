@@ -17,7 +17,7 @@
         <!-- JavaScriptファイルを読み込む -->
         <script src="{{ mix('js/app.js') }}"></script>
     </head>
-    <body id="app" class="font-sans text-gray-900 antialiased">
+    <body class="font-sans text-gray-900 antialiased">
         @include('layouts.admin_navigation')
         {{ $slot }}
         @include('layouts.footer')
@@ -25,6 +25,10 @@
         <script src="https://kit.fontawesome.com/d6cedd7120.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/vue@3.1.1/dist/vue.global.prod.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         {{-- <script>
             const surveyResultComponent = {
                 props: {
@@ -54,61 +58,61 @@
                         </div>
                     </div>
                 `
-            };
-
-            Vue.createApp({
-                data(){
-                    return {
-                        status: 'survey', // `survey` or `result`
-                        survey: @json($survey),
-                        isPolled: @json($is_polled),
-                        surveyResults: {}
-                    }
-                },
-                methods: {
-                    poll(surveyItemId) {
-                        const url = '{{ route('survey.store') }}';
-                        const params = {
-                            survey_id: this.survey.id,
-                            survey_item_id: surveyItemId
-                        };
-                        axios.post(url, params)
-                        .then(response => {
-                            if(response.data.result === true) {
-                                this.getResult();
-                            }
-                        })
-                        .catch(error => {
-                            alert('バリデーション・エラー');
-                            console.log(errors.response.data);
-                            // TODO: ここでエラー処理
-                        });
-                    },
-                    getResult() {
-                        const url = '{{ route('survey.result') }}/'+ this.survey.id;
-                        axios.get(url)
-                        .then(response => {
-                            this.status = 'result'; // 表示を切り替え
-                            this.surveyResults = response.data;
-                        });
-                    }
-                },
-                computed: {
-                    isStatussurvey(){
-                        return (this.status === 'survey');
-                    },
-                    isStatusResult(){
-                        return (this.status === 'result');
-                    }
-                },
-                mounted() {
-                    if(this.isPolled === true) {
-                        this.getResult();
-                    }
-                }
-            })
-            .component('v-survey-result', surveyResultComponent)
-            .mount('#app');
+            }; --}}
+{{-- 
+            // Vue.createApp({
+            //     data(){
+            //         return {
+            //             status: 'survey', // `survey` or `result`
+            //             survey: @json($survey),
+            //             isPolled: @json($is_polled),
+            //             surveyResults: {}
+            //         }
+            //     },
+            //     methods: {
+            //         poll(surveyItemId) {
+            //             const url = '{{ route('survey.store') }}';
+            //             const params = {
+            //                 survey_id: this.survey.id,
+            //                 survey_item_id: surveyItemId
+            //             };
+            //             axios.post(url, params)
+            //             .then(response => {
+            //                 if(response.data.result === true) {
+            //                     this.getResult();
+            //                 }
+            //             })
+            //             .catch(error => {
+            //                 alert('バリデーション・エラー');
+            //                 console.log(errors.response.data);
+            //                 // TODO: ここでエラー処理
+            //             });
+            //         },
+            //         getResult() {
+            //             const url = '{{ route('survey.result') }}/'+ this.survey.id;
+            //             axios.get(url)
+            //             .then(response => {
+            //                 this.status = 'result'; // 表示を切り替え
+            //                 this.surveyResults = response.data;
+            //             });
+            //         }
+            //     },
+            //     computed: {
+            //         isStatussurvey(){
+            //             return (this.status === 'survey');
+            //         },
+            //         isStatusResult(){
+            //             return (this.status === 'result');
+            //         }
+            //     },
+            //     mounted() {
+            //         if(this.isPolled === true) {
+            //             this.getResult();
+            //         }
+            //     }
+            // })
+            // .component('v-survey-result', surveyResultComponent)
+            // .mount('#app');
         </script> --}}
     </body>
 </html>

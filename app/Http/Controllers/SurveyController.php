@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class SurveyController extends Controller
 {
+    public function create()
+    {
+        return view('admin.auth.survey');
+    }
     public function show(Survey $survey)
     {
         $now = now();

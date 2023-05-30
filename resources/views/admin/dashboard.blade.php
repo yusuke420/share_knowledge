@@ -84,6 +84,38 @@
 
         {{ $posts->links() }}
 
+    <div id="app" class="p-5">
+        <div class="row" v-if="isStatusQuestion">
+            <div class="col">
+                <h3 class="mb-3" v-text="question.title"></h3>
+                <div class="d-grid" v-for="item in question.items">
+                    <button
+                        type="button"
+                        class="btn btn-outline-info rounded-pill mb-2"
+                        v-text="item.option"
+                        @click="poll(item.id)">
+                    </button>
+                </div>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    
+        <div class="row" v-if="isStatusResult">
+            <div class="col">
+                <h3 class="mb-3" v-text="question.title"></h3>
+                <div v-for="result in questionResults">
+                    <v-question-result
+                        :option="result.option"
+                        :percentage="result.percentage"></v-question-result>
+                    <br>
+                </div>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    </div>
+
         <div data-dial-init class="fixed bottom-6 right-24 group">
             <div id="speed-dial-menu-dropdown-alternative" class="flex flex-col justify-end hidden py-1 mb-4 space-y-2 bg-white border border-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
                 <ul class="text-sm text-gray-500 dark:text-gray-300">
