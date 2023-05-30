@@ -82,55 +82,27 @@ class PostController extends Controller
     /**
 	 * お問い合わせフォーム データベース登録・編集
 	 */
-	public function update(Request $request)
+	public function update(Request $request, Post $post)
 	{
-		$post = new Post();
-		// actionの値を取得
-		$action = $request->input('action');
-		// action以外のinputの値を取得
-		$inputs = $request->except('action');
+        $request->validate([
+            'title' => 'required|max:255',
+            'importance' => 'required',
+            'body' => 'required',
+        ]);
+        $post->title = $request->title;
+        $post->importance = $request->importance;
+        $post->body = $request->body; 
+        $post->user_id = Auth::guard('admin')->user()->id;
+        $post->save();
 
-		$referer = $inputs['referer'];
-		$id = $inputs['id'];
+        $read=Read::where('post_id', $post->id);
+        $read->delete();
+        return back()->with('message', '投稿を更新しました。');
+    }
 
-		// 戻り先を振り分ける
-		if ($referer === 'contact') {
-			$backPage = 'admin.dashboard';
-		} elseif ($referer === 'edit') {
-			$backPage = 'admin.auth.edit';
-		}
-
-		//actionの値で分岐
-		if ($action !== 'submit') {
-			// 戻るボタンでリダイレクト
-			return redirect()
-				->route($backPage, ['id' => $id])
-				->withInput($inputs);
-		} else {
-			// 二重送信対策 トークン再発行
-			$request->session()->regenerateToken();
-
-			if ($referer === 'contact') {
-				//DB登録
-				$data = $request->all();
-				$post->addMessage($data);
-			} elseif ($referer === 'edit') {
-				//DB編集
-				$data = $request->all();
-				$post->updateMessage($data, $id);
-			}
-			return view('admin.dashboard');
-		}
-	}
-
-
-    use SoftDeletes;
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
-    
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return redirect()->route('admin.dashboard')->with('message', '投稿を削除しました。');
+    }
 }

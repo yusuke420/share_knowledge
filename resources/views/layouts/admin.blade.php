@@ -11,6 +11,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+        <!-- Google Login API -->
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="328360259778-gq3m5hagr0mjdree0oocga86fe4kkhk3.apps.googleusercontent.com">
         <!-- CSSファイルを読み込む -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 

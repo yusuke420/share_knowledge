@@ -2,17 +2,17 @@
     <div class="bg-white py-6 sm:py-8 lg:py-12">
         <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl">周知内容編集投稿</h2>
-            <form method="POST" action="{{ route('admin.post.update') }}" class="mx-auto max-w-lg rounded-lg border">
+            @if(session('message'))
+            <div class="alert alert-success">{{ session('message') }}</div>
+            @endif
+            <form method="POST" action="{{ route('admin.post.update', $post) }}" class="mx-auto max-w-lg rounded-lg border">
                 @csrf
+                @method('put')
                 <div class="flex flex-col gap-4 p-4 md:p-8">
                     <!-- Title -->
                     <div>
                         <x-input-label for="title" :value="__('タイトル')" />
-                        @empty(old('title'))
-                            <input id="title" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" type="text" name="title" value="{{ $post['title'] }}" required autofocus autocomplete="title" />
-                        @else
-                            <input id="title" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" type="text" name="title" value="{{ old('title') }}" required autofocus autocomplete="title" />
-                        @endempty
+                        <input id="title" class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" type="text" name="title" value="{{ old('title', $post->title) }}" required autofocus autocomplete="title" />
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
 
@@ -44,19 +44,19 @@
                             <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white" id="importance" type="importance" name="importance" required autocomplete="importance">
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                     <div class="flex items-center pl-3">
-                                        <input id="importance-high" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" type="radio" name="importance" value="high" checked="{{ old ('importance') == '1' ? 'checked' : '' }}" required autocomplete="importance" />
+                                        <input id="importance-high" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" type="radio" name="importance" value="high" checked="{{ old('importance') == '1' ? 'checked' : '' }}" required autocomplete="importance" />
                                         <label for="importance-high" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">高</label>
                                     </div>
                                 </li>
                                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                                     <div class="flex items-center pl-3">
-                                        <input id="importance-mid" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" type="radio" name="importance" value="medium" checked="{{ old ('importance') == '2' ? 'checked' : '' }}" required autocomplete="importance" />
+                                        <input id="importance-mid" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" type="radio" name="importance" value="medium" checked="{{ old('importance') == '2' ? 'checked' : '' }}" required autocomplete="importance" />
                                         <label for="importance-mid" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">中</label>
                                     </div>
                                 </li>
                                 <li class="w-full dark:border-gray-600">
                                     <div class="flex items-center pl-3">
-                                        <input id="importance-low" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" type="radio" name="importance" value="low" checked="{{ old ('importance') == '3' ? 'checked' : '' }}" required autocomplete="importance" />
+                                        <input id="importance-low" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" type="radio" name="importance" value="low" checked="{{ old('importance') == '3' ? 'checked' : '' }}" required autocomplete="importance" />
                                         <label for="importance-low" class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">低</label>
                                     </div>
                                 </li>
@@ -100,11 +100,7 @@
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
                             <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800" required autocomplete="body">
-                                @empty(old('body'))
-                                    <textarea id="body" name="body" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" required autocomplete="body">{{ $post['body'] }}</textarea>
-                                @else
-                                    <textarea id="body" name="body" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" required autocomplete="body">{{ old('body') }}</textarea>
-                                @endempty
+                                <textarea id="body" name="body" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" required autocomplete="body">{{ old('body', $post->body) }}</textarea>
                             </div>
                         </div>
                         <x-input-error :messages="$errors->get('body')" class="mt-2" />

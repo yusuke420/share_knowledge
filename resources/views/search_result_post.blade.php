@@ -59,8 +59,8 @@
                             <h5 class="p-4">{{ $post->title }}</h5>
                             <span>
                                 <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
-                                    <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">
-                                        <i class="{{ $post->isReadBy(Auth::user()->id) ? 'fa-solid fa-square-check check active' : 'fa-regular fa-square check' }}" style="color: #000000;"></i>
+                                    <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">既読
+                                        <i class="{{ $post->isReadBy(Auth::user()->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
                                     </button>
                                 </a>
                             </span>
