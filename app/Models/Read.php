@@ -17,7 +17,7 @@ class Read extends Model
         return $this->belongsTo('App\Models\Post');
     }
 
-        /**
+    /**
      * 投稿に既読しているかどうか
      *
      * @param integer $user

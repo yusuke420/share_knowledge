@@ -62,15 +62,15 @@
                                         {{ \Carbon\Carbon::parse($user->created_at)->format('Y/m/d') }}
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                        <div class="">
-                                            <a href="" class="">編集</a>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        <form action="" method="post" class="">
-                                        @csrf
-                                            <input type="submit" value="削除" class="" onclick='return confirm("本当に削除しますか？");'>
-                                        </form>
+                                        <span class="ml-2">
+                                            <form method="post" action="{{ route('admin.user.destroy', $user->id) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" onClick="return confirm('本当に削除しますか？');" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                                                    削除
+                                                </button>
+                                            </form>
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach

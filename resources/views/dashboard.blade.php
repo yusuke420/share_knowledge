@@ -57,13 +57,19 @@
                             <span>
                                 <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
                                     <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">既読
-                                        <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
+                                        <i class="{{ $post->isReadBy(Auth::user()->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
                                     </button>
                                 </a>
                             </span>
                             <p class="absolute right-0 px-2" style="top: 3.5rem;">{{ \Carbon\Carbon::parse($post->created_at)->format('Y/m/d') }}</p>
                         </div>
                         <p class="p-4">{{ $post->body }}</p>
+                        @if ($post->image !=='')
+                        <div>
+                            <img src="{{ Storage::url($post->image) }}">
+                        </div>
+                        @else
+                        @endif
                     </div>
                     @endforeach
                     <!-- post - end -->

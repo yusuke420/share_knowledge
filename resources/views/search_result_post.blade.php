@@ -67,6 +67,12 @@
                             <p class="absolute right-0 px-2" style="top: 3.5rem;">{{ \Carbon\Carbon::parse($post->created_at)->format('Y/m/d') }}</p>
                         </div>
                         <p class="p-4">{{ $post->body }}</p>
+                        @if ($post->image !=='')
+                        <div>
+                            <img src="{{ Storage::url($post->image) }}">
+                        </div>
+                        @else
+                        @endif
                     </div>
                     @endforeach
                     <!-- post - end -->

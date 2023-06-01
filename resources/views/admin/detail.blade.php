@@ -31,7 +31,7 @@
                                 </button>
                             </span> --}}
                             <span>
-                                <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
+                                <a href="{{ route('admin.read', $post) }}" class="btn btn-secondary btn-sm">
                                     <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">既読
                                         <i class="{{ $post->isReadBy(Auth::guard('admin')->user()->id) ? 'fa-solid fa-square-check' : 'fa-regular fa-square' }}" style="color: #000000;"></i>
                                     </button>
@@ -40,24 +40,31 @@
                             <p class="absolute right-0 px-2" style="top: 3.5rem;">{{ \Carbon\Carbon::parse($post->created_at)->format('Y/m/d') }}</p>
                         </div>
                         <p class="p-4">{{ $post->body }}</p>
+                        @if ($post->image !=='')
+                        <div>
+                            <img src="{{ Storage::url($post->image) }}">
+                        </div>
+                        @else
+                        @endif
                         <a href="{{ route('admin.post.edit', $post) }}" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0 absolute bottom-0 right-0 p-4">編集
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
                 <!-- post - end -->
                 </div>
+                <span class="ml-2">
+                    <form method="post" action="{{ route('admin.post.destroy', $post) }}">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" onClick="return confirm('本当に削除しますか？');" class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                            この投稿を削除
+                        </button>
+                    </form>
+                </span>
             </div>
         </div>
 
-        <span class="ml-2">
-            <form method="post" action="{{ route('admin.post.destroy', $post) }}">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-danger" onClick="return confirm('本当に削除しますか？');">
-                    削除
-                </button>
-            </form>
-        </span>
 
         <div class="bg-white py-6 sm:py-8 lg:py-12">
             <div class="mx-auto max-w-screen-2xl px-4 md:px-8">

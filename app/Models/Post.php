@@ -26,6 +26,7 @@ class Post extends Model
         'title',
         'importance',
         'body',
+        'image',
     ];
 
     /**

@@ -14,4 +14,12 @@ class Survey extends Model
     {
         return $this->hasMany(SurveyItem::class, 'survey_id', 'id');
     }
+
+    public function answers() {
+        return $this->hasMany(Answer::class);
+    }
+
+    public function isAnsweredBy($user) {
+        return $this->answers()->where('user_id', $user)->exists();
+    }
 }
