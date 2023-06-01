@@ -49,18 +49,6 @@ class PostController extends Controller
             'body' => $request->body,
         ]);
 
-        // 保存用データ配列
-        $data = $request->validated();
-
-        // 画像取得
-        $image_path = '';
-        if ($request->hasFile('image')) {
-            $image_path    = $request->file('image')->store('image', 'public');
-            $data['image'] = $image_path;
-        }
-
-        // 保存
-        Post::create($data);
         event(new Registered($post));
 
         // 投稿完了後にリダイレクトする
@@ -92,9 +80,6 @@ class PostController extends Controller
 		return view('admin.auth.edit', compact('post'));
     }
 
-    /**
-	 * お問い合わせフォーム データベース登録・編集
-	 */
 	public function update(Request $request, Post $post)
 	{
         $request->validate([
@@ -102,46 +87,23 @@ class PostController extends Controller
             'importance' => 'required',
             'body' => 'required',
         ]);
-        $image_path = '';           // 選択された画像
-        $image_cur  = $post->image; // 現在の画像ファイルパス
+        $read=Read::where('post_id', $post->id);
+        $read->delete();
 
-        // 保存用データ配列
         $data = [
-            'title'       => $request->title,
+            'title' => $request->title,
             'importance' => $request->importance,
             'body' => $request->body,
         ];
-        if ($request->hasFile('image')) {
-            // 現在の画像ファイル削除
-            if ($image_cur !== '' && !is_null($image_cur)) {
-                Storage::disk('public')->delete($image_cur);
-            }
-            // 選択画像ファイルを保存してパスをセット
-            $image_path    = $request->file('image')->store('image', 'public');
-            $data['image'] = $image_path;
-        }
-
-        // 更新
-        $post->update($data);
-        // $post->title = $request->title;
-        // $post->importance = $request->importance;
-        // $post->body = $request->body; 
         $post->user_id = Auth::guard('admin')->user()->id;
+        $post->update($data);
 
-        $read=Read::where('post_id', $post->id);
-        $read->delete();
-        return back()->with('message', '投稿を更新しました。');
+        $users = DB::table('users')->select('id', 'name', 'email', 'created_at')->get();
+        return view('admin.detail', compact('post', 'users'))->with('message', '投稿を更新しました。');
     }
 
     public function destroy(Post $post)
     {
-        // 画像ファイルパスを取得
-        $image_cur = $post->image;
-
-        // 登録されていれば削除
-        if ($image_cur !== '' && !is_null($image_cur)) {
-            Storage::disk('public')->delete($image_cur);
-        }
         $post->delete();
         return redirect()->route('admin.dashboard')->with('message', '投稿を削除しました。');
     }

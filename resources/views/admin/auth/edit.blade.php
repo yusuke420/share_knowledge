@@ -2,9 +2,6 @@
     <div class="bg-white py-6 sm:py-8 lg:py-12">
         <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
             <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-8 lg:text-3xl">周知内容編集投稿</h2>
-            @if(session('message'))
-            <div class="alert alert-success">{{ session('message') }}</div>
-            @endif
             <form method="POST" action="{{ route('admin.post.update', $post) }}" class="mx-auto max-w-lg rounded-lg border">
                 @csrf
                 @method('put')
@@ -83,7 +80,6 @@
                                         <label type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path></svg>
                                             <span class="sr-only">Upload image</span>
-                                            <input style="display: none;" type="file" name="image">
                                         </label>
                                         <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -102,14 +98,6 @@
                             </div>
                             <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800" required autocomplete="body">
                                 <textarea id="body" name="body" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" required autocomplete="body">{{ old('body', $post->body) }}</textarea>
-                                <div>
-                                    <div>
-                                        @if ($post->image !=='')
-                                        <img src="{{ Storage::url($post->image) }}">
-                                        @else
-                                        @endif
-                                    </div>
-                                <div>
                             </div>
                         </div>
                         <x-input-error :messages="$errors->get('body')" class="mt-2" />

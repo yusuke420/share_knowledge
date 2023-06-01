@@ -57,9 +57,10 @@ Route::get('/admin/dashboard/read/{post}', [App\Http\Controllers\Admin\Auth\Read
 
 
 Route::get('/admin/post/detail/{post}', [App\Http\Controllers\Admin\Auth\PostController::class, 'detail'])->name('admin.post.detail');
+Route::post('/admin/post/detail/{post}', [App\Http\Controllers\Admin\Auth\PostController::class, 'detail'])->name('admin.post.detail');
 Route::get('/admin/post/edit/{post}', [App\Http\Controllers\Admin\Auth\PostController::class, 'edit'])->name('admin.post.edit');
-Route::patch('/admin/dashboard', [App\Http\Controllers\Admin\Auth\PostController::class, 'update'])->name('admin.post.update');
-Route::delete('/admin/post/detail/destroy/{id}',[App\Http\Controllers\Admin\Auth\PostController::class, 'destroy'])->name('admin.post.destroy');
+Route::put('/admin/post/update/{post}', [App\Http\Controllers\Admin\Auth\PostController::class, 'update'])->name('admin.post.update');
+Route::delete('/admin/post/detail/destroy/{post}',[App\Http\Controllers\Admin\Auth\PostController::class, 'destroy'])->name('admin.post.destroy');
 
 Route::get('searchResultPost', [PostController::class, 'controllerSearchPost'])->name('searchResultPost');
 Route::get('/admin/searchResultPost', [App\Http\Controllers\Admin\Auth\PostController::class, 'controllerSearchPost'])->name('admin.searchResultPost');

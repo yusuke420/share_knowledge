@@ -84,10 +84,6 @@
                             <p class="absolute right-0 px-2" style="top: 3.5rem;">{{ \Carbon\Carbon::parse($post->created_at)->format('Y/m/d') }}</p>
                         </div>
                         <p class="p-4">{{ $post->body }}</p>
-                        @if ($post->image !=='')
-                        <img src="{{ Storage::url($post->image) }}">
-                        @else
-                        @endif
                         <a href="{{ route('admin.post.detail', $post) }}" class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0 absolute bottom-0 right-0 p-4">詳細
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
