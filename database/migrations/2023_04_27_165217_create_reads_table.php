@@ -29,7 +29,7 @@ return new class extends Migration
                     ->on('posts')
                     ->onDelete('cascade');
 
-            $table->unique('post_id', 'user_id');
+            $table->unique('user_id');
         });
     }
 

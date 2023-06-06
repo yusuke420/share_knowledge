@@ -99,7 +99,7 @@ class PostController extends Controller
         $post->update($data);
 
         $users = DB::table('users')->select('id', 'name', 'email', 'created_at')->get();
-        return view('admin.detail', compact('post', 'users'))->with('message', '投稿を更新しました。');
+        return view('admin.detail', compact('post', 'users'));
     }
 
     public function destroy(Post $post)

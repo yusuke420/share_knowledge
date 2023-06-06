@@ -56,7 +56,7 @@
                             @default
                                 <div>
                         @endswitch
-                            <h5 class="p-4">{{ $post->title }}</h5>
+                            <h5 class="p-4 text-lg font-bold">{{ $post->title }}</h5>
                             <span>
                                 <a href="{{ route('read', $post) }}" class="btn btn-secondary btn-sm">
                                     <button class="absolute top-0 right-0 px-4 py-2" data-post-id="{{ $post->id }}" type="button">既読
