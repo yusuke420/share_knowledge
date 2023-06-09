@@ -15,7 +15,8 @@ class UserController extends Controller
 		return view('admin.auth.user-list', compact('users'));
 	}
 
-	public function controllerSearchUser(Request $request, User $user) {
+	public function controllerSearchUser(Request $request, User $user)
+    {
         $keyword = $request->input('search');
         $users = $user->modelSearchUser($keyword);
         return view('admin.auth.search_result_user', compact('users'));
