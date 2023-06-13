@@ -11,7 +11,8 @@ class UserController extends Controller
 {
     public function show()
 	{
-		$users = DB::table('users')->select('id', 'name', 'email', 'created_at')->get();
+		$users = DB::table('users')->get();
+        // $users = User::all();
 		return view('admin.auth.user-list', compact('users'));
 	}
 
