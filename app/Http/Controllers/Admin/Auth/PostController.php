@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Read;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -71,7 +72,7 @@ class PostController extends Controller
 
     public function detail(Request $request, Post $post)
     {
-        $users = DB::table('users')->select('id', 'name', 'email', 'created_at')->get();
+        $users = User::all();
         return view('admin.detail', compact('post','users'));
     }
 
@@ -98,7 +99,7 @@ class PostController extends Controller
         $post->user_id = Auth::guard('admin')->user()->id;
         $post->update($data);
 
-        $users = DB::table('users')->select('id', 'name', 'email', 'created_at')->get();
+        $users = User::all();
         return view('admin.detail', compact('post', 'users'));
     }
 

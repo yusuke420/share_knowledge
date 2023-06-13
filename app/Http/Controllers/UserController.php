@@ -11,8 +11,8 @@ class UserController extends Controller
 {
     public function show()
 	{
-		// $users = DB::table('users')->get();
-        $users = User::all();
+		// $users = DB::table('users')->get();  //クエリビルダ
+        $users = User::all();                   //Eloquent
 		return view('admin.auth.user-list', compact('users'));
 	}
 
